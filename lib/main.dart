@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.deepOrange,
       ),
       home: MyHomePage(title: 'PDF Reader'),
     );
@@ -37,7 +37,6 @@ class _MyHomePageState extends State<MyHomePage> {
   File file;
   final dbHelper = DatabaseHelper.instance;
 
-  // File Picker
 
   Future<File> selectFile() async {
     FilePickerResult result = await FilePicker.platform.pickFiles(
@@ -97,45 +96,73 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ElevatedButton(
-                child: Text('Select PDF'),
-                onPressed: () async {
-                  file = await selectFile();
-                  setState(() {});
-                  print(file.path);
-                  if (file != null) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            FullPdfViewerScreen(file.path, basename(file.path)),
-                      ),
-                    );
-                  } else {}
-                }),
-            // ElevatedButton(
-            //   onPressed: () async {
-            //     // int i =
-            //     //     await DatabaseHelper.instance.insert({
-            //     //       'columnName': 'Ishmam'
-            //     //     });
-            //     // print(i);
-            //   },
-            //   child: Text('Add Data'),
+            // SizedBox(
+            //   height: 40,
+            //   width: 150,
+            //   child: ElevatedButton(
+            //     // style: ElevatedButton.styleFrom(
+            //     //   padding: EdgeInsets.all(20)
+            //     // ),
+            //     onPressed: _delete,
+            //     // color: Colors.red,
+            //     child: Text(
+            //       "delete",
+            //
+            //     ),
+            //     // textColor: Colors.white,
+            //   ),
             // ),
-            ElevatedButton(
-              onPressed: () async {
-                var historyList = await _query();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HistoryScreen(
-                      historyList: historyList,
+            // const SizedBox(height: 30,),
+
+            SizedBox(
+              height: 40,
+              width: 150,
+              child: ElevatedButton(
+                  // style: ElevatedButton.styleFrom(
+                  //   side: ,
+                  //   shape: RoundedRectangleBorder(
+                  //     borderRadius: BorderRadius.circular(30)
+                  //   ),
+                  //     padding: EdgeInsets.all(20)
+                  // ),
+                  child: Text('Select PDF'),
+                  onPressed: () async {
+                    file = await selectFile();
+                    setState(() {});
+                    print(file.path);
+                    if (file != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              FullPdfViewerScreen(file.path, basename(file.path)),
+                        ),
+                      );
+                    } else {}
+                  }),
+            ),
+            const SizedBox(height: 30,),
+            SizedBox(
+              height: 40,
+              width: 150,
+              child: ElevatedButton(
+                // style: ElevatedButton.styleFrom(
+                //   elevation: 3,
+                //     padding: EdgeInsets.all(20)
+                // ),
+                onPressed: () async {
+                  var historyList = await _query();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HistoryScreen(
+                        historyList: historyList,
+                      ),
                     ),
-                  ),
-                );
-              },
-              child: Text('Show history'),
+                  );
+                },
+                child: Text('Show history'),
+              ),
             ),
           ],
         ),

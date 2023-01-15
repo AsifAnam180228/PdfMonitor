@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'database_helper.dart';
+
 class HistoryScreen extends StatefulWidget {
   final List historyList;
 
@@ -10,9 +12,11 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
+  get dbHelper => DatabaseHelper.instance;
+
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     print('History List:');
     print(widget.historyList);
@@ -20,6 +24,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    void _delete() async {
+
+
+      final id = await dbHelper.queryRowCount();
+      final rowsDeleted = await dbHelper.delete(id);
+
+      print('deleted $rowsDeleted row(s): row $id');
+    }
+
     return Scaffold(
         appBar: AppBar(
           leading: Icon(Icons.history),
@@ -27,6 +40,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
         ),
         body: ListView(
           children: [
+            RaisedButton(
+              onPressed: _delete,
+              color: Colors.green,
+              child: Text(
+                "delete",
+              ),
+            ),
+
             SizedBox(height: 15,),
             ListView.builder(
                 physics: ScrollPhysics(),
@@ -35,8 +56,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 itemBuilder: (ctx, index) {
                   return Container(
                     padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(3), color: Colors.redAccent,),
+                    margin:  EdgeInsets.all(10),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.deepOrange.shade50,),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -49,4 +70,5 @@ class _HistoryScreenState extends State<HistoryScreen> {
           ],
         ));
   }
+
 }

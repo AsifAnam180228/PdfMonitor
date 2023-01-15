@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'database_helper.dart';
 
+
 class FullPdfViewerScreen extends StatefulWidget {
   final String pdfPath;
   final String pdfName;
@@ -47,6 +48,7 @@ class _FullPdfViewerScreenState extends State<FullPdfViewerScreen> {
       (Timer timer) {
         setState(() {
           _start++;
+
         });
       },
     );
